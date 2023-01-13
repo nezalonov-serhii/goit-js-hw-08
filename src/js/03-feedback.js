@@ -9,16 +9,36 @@ const refs = {
 const FEEDBACK_FORM = 'feedback-form-state';
 const dataUser = {};
 
+const save = (key, value) => {
+  try {
+    const serializedState = JSON.stringify(value);
+    localStorage.setItem(key, serializedState);
+  } catch (error) {
+    console.error('Set state error: ', error.message);
+  }
+};
+
+const load = key => {
+  try {
+    const serializedState = localStorage.getItem(key);
+    return serializedState === null ? undefined : JSON.parse(serializedState);
+  } catch (error) {
+    console.error('Get state error: ', error.message);
+  }
+};
+
 function setDataUser() {
   dataUser.email = refs.inputEmail.value;
   dataUser.message = refs.textareaMessage.value;
 
-  localStorage.setItem(FEEDBACK_FORM, JSON.stringify(dataUser));
+  // localStorage.setItem(FEEDBACK_FORM, JSON.stringify(dataUser));
+
+  save(FEEDBACK_FORM, dataUser);
 }
 
 function getDataUser() {
-  if (localStorage.getItem(FEEDBACK_FORM)) {
-    const localDataUser = JSON.parse(localStorage.getItem(FEEDBACK_FORM));
+  if (load(FEEDBACK_FORM)) {
+    const localDataUser = load(FEEDBACK_FORM);
 
     refs.inputEmail.value = localDataUser.email;
     refs.textareaMessage.value = localDataUser.message;
