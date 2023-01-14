@@ -49,7 +49,7 @@ function submitForm(e) {
   e.preventDefault();
 
   if (refs.inputEmail.value !== '' && refs.textareaMessage.value !== '') {
-    console.log(dataUser);
+    console.log(load(FEEDBACK_FORM));
 
     e.currentTarget.reset();
 
